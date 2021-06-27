@@ -28,6 +28,7 @@ abstract class _PokeControllerBase with Store {
       final model = PokeAPI.fromJson(item);
       lista.add(model);
     }
+
     return lista;
   }
 

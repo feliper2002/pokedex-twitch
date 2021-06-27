@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex_twitch/modules/home/presenter/models/pokeapi.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/home_controller.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/poke_controller.dart';
+import 'package:pokedex_twitch/modules/home/presenter/widgets/pokeCard.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeController> {
   @override
   void initState() {
-    pokeController.loadPokeAPI();
+    Future.delayed(Duration(seconds: 1), pokeController.loadPokeAPI());
     super.initState();
   }
 
@@ -44,12 +46,28 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: pokeController.pokeAPI!.length,
-                itemBuilder: (context, index) {
-                  return Text(pokeController.pokeAPI![index].names!.english!);
-                },
-              ),
+              child: Observer(builder: (_) {
+                return FutureBuilder(
+                  future: pokeController.fetchApi(),
+                  initialData: pokeController.pokeAPI,
+                  builder: (context, snapshot) {
+                    return pokeController.pokeAPI != null
+                        ? ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            itemCount: pokeController.pokeAPI!.length,
+                            itemBuilder: (context, index) {
+                              PokeAPI poke = pokeController.pokeAPI![index];
+                              return PokeCard(
+                                dexNum: poke.dexNr,
+                                name: poke.names!.english!,
+                                primaryType: poke.primaryType!.names!.english,
+                              );
+                            },
+                          )
+                        : Center(child: CircularProgressIndicator());
+                  },
+                );
+              }),
             ),
           ],
         ),
