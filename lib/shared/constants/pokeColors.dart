@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class PokeColor {
   static Color? getColor(String? primaryType) {
-    print(primaryType);
     if (primaryType == "Grass") return Color(0xff8BBE8A);
     if (primaryType == "Bug") return Color(0xff8BD674);
     if (primaryType == "Fire") return Color(0xffFFA756);

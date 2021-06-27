@@ -50,13 +50,13 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                 return FutureBuilder(
                   future: pokeController.fetchApi(),
                   initialData: pokeController.pokeAPI,
-                  builder: (context, snapshot) {
-                    return pokeController.pokeAPI != null
+                  builder: (context, AsyncSnapshot<List<PokeAPI>?> snapshot) {
+                    return snapshot.data != null
                         ? ListView.builder(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
-                            itemCount: pokeController.pokeAPI!.length,
+                            itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
-                              PokeAPI poke = pokeController.pokeAPI![index];
+                              PokeAPI poke = snapshot.data![index];
                               return PokeCard(
                                 dexNum: poke.dexNr,
                                 name: poke.names!.english!,
@@ -64,7 +64,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                               );
                             },
                           )
-                        : Center(child: CircularProgressIndicator());
+                        : Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.red));
                   },
                 );
               }),
