@@ -18,6 +18,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 1), pokeController.loadPokeAPI());
+    // pokeController.getFilteredText();
     super.initState();
   }
 
@@ -29,21 +30,56 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Pokédex',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 32),
-            ),
-            Text(
-                'Search for Pokémon by name or using the National Pokédex number.'),
-            TextFormField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'What Pokémon are you looking for?',
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Pokédex',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 32),
+                  ),
+                  Text(
+                    'Search for Pokémon by name or using the National Pokédex number.',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromRGBO(116, 116, 118, 1)),
+                  ),
+                ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Observer(builder: (_) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(242, 242, 242, 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextFormField(
+                    controller: pokeController.textEditingController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(242, 242, 242, 1))),
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'What Pokémon are you looking for?',
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        pokeController.setFilteredText(text);
+                      });
+                    },
+                  ),
+                );
+              }),
             ),
             Expanded(
               child: Observer(builder: (_) {
@@ -54,9 +90,12 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                     return snapshot.data != null
                         ? ListView.builder(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
-                            itemCount: snapshot.data!.length,
+                            itemCount: pokeController.getFilteredText()!.length,
                             itemBuilder: (context, index) {
-                              PokeAPI poke = snapshot.data![index];
+                              List<PokeAPI> lista =
+                                  pokeController.getFilteredText()!;
+                              print(lista);
+                              PokeAPI? poke = lista[index];
                               return PokeCard(
                                 dexNum: poke.dexNr,
                                 name: poke.names!.english!,

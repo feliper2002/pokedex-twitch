@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pokedex_twitch/modules/home/presenter/models/pokeapi.dart';
 import 'package:pokedex_twitch/shared/constants/appconsts.dart';
@@ -9,9 +10,6 @@ class PokeController = _PokeControllerBase with _$PokeController;
 abstract class _PokeControllerBase with Store {
   final dio = Dio();
   final url = AppConstants.kanto;
-
-  @observable
-  String? nome;
 
   @observable
   ObservableList<PokeAPI>? _pokeApi = <PokeAPI>[].asObservable();
@@ -41,5 +39,21 @@ abstract class _PokeControllerBase with Store {
     });
   }
 
-  ObservableList<PokeAPI> listaPokemon = <PokeAPI>[].asObservable();
+  TextEditingController textEditingController = TextEditingController();
+
+  @observable
+  String filteredText = '';
+
+  @action
+  setFilteredText(text) {
+    filteredText = text;
+  }
+
+  List<PokeAPI>? getFilteredText() {
+    return pokeAPI!.where((element) {
+      return (element.names!.english as String)
+          .toLowerCase()
+          .contains(filteredText);
+    }).toList();
+  }
 }
