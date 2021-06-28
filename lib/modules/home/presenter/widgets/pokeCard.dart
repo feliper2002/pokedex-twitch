@@ -3,13 +3,16 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/home_controller.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/poke_controller.dart';
 import 'package:pokedex_twitch/shared/constants/pokeColors.dart';
+import 'package:pokedex_twitch/shared/constants/pokeType.dart';
 
 class PokeCard extends StatelessWidget {
   final int? dexNum;
   final String? name;
   final String? primaryType;
+  final String? secondaryType;
 
-  PokeCard({Key? key, this.name, this.dexNum, this.primaryType})
+  PokeCard(
+      {Key? key, this.name, this.dexNum, this.primaryType, this.secondaryType})
       : super(key: key);
 
   final controller = Modular.get<PokeController>();
@@ -33,6 +36,7 @@ class PokeCard extends StatelessWidget {
           child: Row(
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     dexNum! < 10
@@ -56,7 +60,17 @@ class PokeCard extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Row(
-                    children: [],
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 5),
+                        child: PokeType.getPokemonType(primaryType),
+                      ),
+                      secondaryType != null || secondaryType == ''
+                          ? Container(
+                              child: PokeType.getPokemonType(secondaryType),
+                            )
+                          : SizedBox.shrink(),
+                    ],
                   ),
                 ],
               ),

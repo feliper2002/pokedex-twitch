@@ -2,7 +2,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class PokeType {
   static SvgPicture? getPokemonType(String? type) {
-    if (type != null) return SvgPicture.asset("assets/Badge/$type.svg");
+    // print(type);
+    // if (type != null) return SvgPicture.asset("assets/Badge/$type.svg");
     if (type == "Grass") return SvgPicture.asset("assets/Badge/Grass.svg");
     if (type == "Bug") return SvgPicture.asset("assets/Badge/Bug.svg");
     if (type == "Fire") return SvgPicture.asset("assets/Badge/Fire.svg");
