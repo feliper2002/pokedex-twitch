@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex_twitch/modules/home/presenter/home.dart';
+import 'package:pokedex_twitch/modules/home/presenter/stores/generation_controller.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/home_controller.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/poke_controller.dart';
 
@@ -8,6 +9,7 @@ class HomeModule extends Module {
   final List<Bind> binds = [
     Bind((i) => HomeController()),
     Bind((i) => PokeController()),
+    Bind((i) => GenerationController()),
   ];
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/home_controller.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/poke_controller.dart';
 import 'package:pokedex_twitch/shared/constants/pokeColors.dart';
+import 'package:pokedex_twitch/shared/constants/pokeImage.dart';
 import 'package:pokedex_twitch/shared/constants/pokeType.dart';
 
 class PokeCard extends StatelessWidget {
@@ -32,6 +33,13 @@ class PokeCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: getPokemonColor,
             borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: getPokemonColor!.withOpacity(.3),
+                offset: Offset(0, 5),
+                blurRadius: .65,
+              ),
+            ],
           ),
           child: Row(
             children: [
@@ -78,17 +86,24 @@ class PokeCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 10,
-          child: Container(
-            height: 130,
-            width: 130,
-            child: Image.network(
-              '$dexNum'.length < 2
-                  ? 'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/00$dexNum.png'
-                  : '$dexNum'.length < 3
-                      ? 'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/0$dexNum.png'
-                      : 'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$dexNum.png',
-            ),
+          right: 0,
+          child: Image.asset(
+            'assets/Container/pokeball.png',
+            fit: BoxFit.contain,
+          ),
+        ),
+        Positioned(
+          right: 15,
+          child: PokeImage.getImage(numero: '$dexNum'),
+        ),
+        Positioned(
+          right: 170,
+          left: 80,
+          top: 5,
+          bottom: 70,
+          child: Image.asset(
+            'assets/Container/pattern.png',
+            fit: BoxFit.contain,
           ),
         ),
       ],

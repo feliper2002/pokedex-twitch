@@ -53,7 +53,7 @@ abstract class _PokeControllerBase with Store {
     return pokeAPI!.where((element) {
       return (element.names!.english as String)
           .toLowerCase()
-          .contains(filteredText);
+          .contains(filteredText.toLowerCase());
     }).toList();
   }
 }

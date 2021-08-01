@@ -8,6 +8,8 @@ import 'package:pokedex_twitch/modules/home/presenter/stores/home_controller.dar
 import 'package:pokedex_twitch/modules/home/presenter/stores/poke_controller.dart';
 import 'package:pokedex_twitch/modules/home/presenter/widgets/pokeCard.dart';
 
+import 'widgets/customAppBar.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -32,6 +34,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
+            Image.asset('assets/AppBar/pokeball.png'),
+            CustomAppBar(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
