@@ -50,10 +50,12 @@ abstract class _PokeControllerBase with Store {
   }
 
   List<PokeAPI>? getFilteredText() {
-    return pokeAPI!.where((element) {
-      return (element.names!.english as String)
-          .toLowerCase()
-          .contains(filteredText.toLowerCase());
-    }).toList();
+    return pokeAPI != null
+        ? pokeAPI!.where((pokemon) {
+            return (pokemon.names!.english as String)
+                .toLowerCase()
+                .contains(filteredText.toLowerCase());
+          }).toList()
+        : [];
   }
 }

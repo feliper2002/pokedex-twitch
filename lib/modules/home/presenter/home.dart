@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex_twitch/modules/home/presenter/models/pokeapi.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/home_controller.dart';
 import 'package:pokedex_twitch/modules/home/presenter/stores/poke_controller.dart';
@@ -21,7 +20,6 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 1), pokeController.loadPokeAPI());
-    // pokeController.getFilteredText();
     super.initState();
   }
 
@@ -73,12 +71,15 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                       ),
                       child: TextFormField(
                         controller: pokeController.textEditingController,
+                        cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide.none),
+                          focusColor: Colors.red,
                           prefixIcon: Icon(Icons.search),
                           hintText: 'What Pokémon are you looking for?',
+                          hintStyle: TextStyle(fontSize: 16),
                         ),
                         onChanged: (text) {
                           setState(() {
