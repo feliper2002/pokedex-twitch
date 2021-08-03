@@ -17,32 +17,34 @@ class GenerationCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         color: Colors.grey[200],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
         children: [
-          Stack(
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/Generation/pokeball.png',
+              fit: BoxFit.cover,
+              color: Colors.grey.withOpacity(.1),
+            ),
+          ),
+          Positioned(
+            left: 15,
+            top: 5,
+            child: Image.asset(
+              'assets/Generation/pattern.png',
+              fit: BoxFit.cover,
+              color: Colors.grey.withOpacity(.2),
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Positioned(
-                left: 15,
-                top: 10,
-                child: Image.asset(
-                  'assets/Generation/pattern.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                bottom: 10,
-                right: 0,
-                child: Image.asset(
-                  'assets/Generation/pokeball.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
               Center(child: Image.asset('assets/Generation/gen$genNum.png')),
+              SizedBox(height: 15),
+              Text(generation!, style: ModalStyle.modalSubtitle),
             ],
           ),
-          SizedBox(height: 15),
-          Text(generation!, style: ModalStyle.modalSubtitle),
         ],
       ),
     );
